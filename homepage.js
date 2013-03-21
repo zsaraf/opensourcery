@@ -17,11 +17,15 @@ function sendGitHubURL() {
 };
 
 $(document).ready(function(){
+	$(".buttonsArea").hide();
+
 	$("input[type=text]").focusin(function() {
 		$(this).addClass("highlighted");
 	}).focusout(function() {
 		$(this).removeClass("highlighted").removeClass("error");
+	}).keyup(function(){
+		$(".buttonsArea").show("slow");
 	});
-
+	
 	$("#url").focus();
 });

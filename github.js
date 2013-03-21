@@ -58,6 +58,7 @@ function getAllFiles(ghrepo, dir, files) {
             console.log('Path: ' + obj.path + ' Type: ' + obj.type);
         }
     });
+}
 
 exports.getLanguageFromFiletype = function(fileExtension){
 	if(everyFileExtension.hasOwnProperty(fileExtension)){
@@ -3113,4 +3114,3 @@ var everyFileExtension = {
 ".zz":"Zzip Compressed Archive file",
 ".zzt":"ZZT Game Creation System"
 };
-
