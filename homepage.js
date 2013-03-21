@@ -1,6 +1,7 @@
 function processGitHubURL() {
-	alert("Hello, world!");
-}
+	var urlText = $('#url').val();
+	alert(urlText);
+};
 
 $(document).ready(function(){
 	$("#url").focus();
