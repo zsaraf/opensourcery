@@ -1,6 +1,6 @@
-var express = require('express');
+var http = require('http');
 
-var app = express.createServer(express.logger());
+var app = http.createServer(http.logger());
 
 app.get('/', function(request, response) {
   response.send('Hello World, this is Opensourcery!');
