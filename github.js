@@ -13,30 +13,29 @@ exports.gatherRepoInformation = function(urlAsJson) {
     console.log(repo);
 
 	var ghrepo = client.repo(repo);
-    
+
     var files = new Array();
     getAllFiles(ghrepo, '/', files);
+    console.log("Done getting all files");
+    setTimeout(function() {
+        var frequencies = {};
+        console.log(files.length);
+        for (var i = 0; i < files.length; i++) console.log("FILE PRAT " + files[i]);
+    }, 5000);
+    console.log("OKAY BITCHY");
+    for (var i = 0; i < files.length; i++) {
+        var fileName = files[i];
+        var extension = fileName.substring(fileName.indexOf("." + 1));
+        if (frequencies.hasOwnProperty(extension)) {
+            frequencies[extension] += 1;
+        } else {
+            frequencies[extension] = 1;
+        }
+    }
+    for (var i in frequencies) {
+        console.log(i + ' Frequency: ' + frequencies[i] + ' Description: ' + getLanguageFromFiletype(i));  
+    }
 
-    for (var i = 0; i < files.length; i++) console.log("File " + files[i]);
-
-	ghrepo.info(function(err, data) {
-        console.log("\n\nGENERAL INFO\n\n");
-		console.log(data);
-	});
-
-
-    ghrepo.languages(function(err, data) {
-        console.log("\n\nLANGUAGE INFO\n\n");
-        console.log(data);
-    });
-
-
-    ghrepo.tags(function(err, data) {
-        console.log("\n\nTAGS INFO\n\n");
-        console.log(data);
-    });
-
-    console.log("github url " + repo); 	
 	var obj = { 'language' : 'JavaScript' };
 	return obj;
 }
@@ -51,14 +50,15 @@ function getAllFiles(ghrepo, dir, files) {
             var path = obj.path;
             var type = obj.type;
             if (type == 'dir') {
-                getAllFiles(ghrepo, dir + path + '/', files);
+                var newDir = path + '/';
+                getAllFiles(ghrepo, newDir, files);
             } else {
                 files[files.length] = path;
             }
             console.log('Path: ' + obj.path + ' Type: ' + obj.type);
         }
     });
-
+}
 exports.getLanguageFromFiletype = function(fileExtension){
 	if(everyFileExtension.hasOwnProperty(fileExtension)){
 		return everyFileExtension[fileExtension];
