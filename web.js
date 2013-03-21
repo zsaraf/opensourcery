@@ -37,6 +37,7 @@ app.post('/', function(request, response){
     console.log("POST RECIEVED");
     var url = request.body.url;
     console.log("URL: " + url);
+    github.gatherRepoInformation(url);
     response.write("FUCK YES");
     response.end();
 });
