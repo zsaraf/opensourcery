@@ -1,5 +1,31 @@
 @CHARSET "UTF-8";
 
+body{
+  font-family: 'Merriweather Sans', sans-serif;
+  min-width: 600px
+}
+
+.buttonsArea{
+  margin-left: 40%;
+  margin-bottom: 30px;
+}
+
+h1.logo{
+  font-weight: 400;
+  font-size: 70px;
+  color: #1B9BE0;
+  margin-bottom: 0px;
+}
+
+h2.logo{
+  margin-top: 0px;
+  margin-left: 35px;
+  color: #1B9BE0;
+}
+
+h1{
+  font-weight: 300;
+}
 
 input[type="text"] {
   background: #f1f1f1;
@@ -25,4 +51,40 @@ input.error{
 input.highlighted{
 	box-shadow: 0 0 4px 1px #05E9FF;
 	outline: 0;
+}
+
+.generalButton {
+  box-sizing: border-box;
+  border-radius: 8px; 
+  width:250px;
+  height:40px;
+  border: 0px;
+  font-size: 120%;
+  color:#ffffff; 
+  margin-top: 35px;
+}
+
+#freeButton{
+  background: #1B9BE0;
+}
+
+#proButton{
+  background: #87CC07;
+}
+
+#proButton:hover{
+  background: #9BE01B;
+}
+
+#freeButton:hover {
+  background: #4DCDFF;
+}
+
+input[type="button"]:active {
+   box-shadow: inset 0 0 10px #000000;
+}
+
+span{
+  color: #909090;
+  margin-left: 20px;
 }
