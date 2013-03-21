@@ -5,6 +5,7 @@
 		<title>Open Sourcery</title>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script src="./homepage.js"></script>
+		<link rel="stylesheet" type="text/css" href="./homepage.css">
 	</head>
 	<link rel="icon" type="image/png" href="./favicon.png">
 	<body>
@@ -12,8 +13,8 @@
   			<h1>You wrote it for people to use it</h1>
   			<h2>Let the world see your code</h2>
 		</center>
-		<form action="javascript:void(0)" onsubmit="processGitHubURL()">
-			GitHub URL: <input type="text" name="url">
+		<form action="javascript:void(0)" onsubmit="sendGitHubURL()">
+			GitHub URL: <input type="text" name="url" id="url">
 		</form>
 	</body>
 </html>
