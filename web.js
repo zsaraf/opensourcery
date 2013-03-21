@@ -35,10 +35,11 @@ app.get('/*', function(request, response) {
 
 app.post('/', function(request, response){
     console.log("POST RECIEVED");
+    
     var url = request.body.url;
     console.log("URL: " + url);
-    github.gatherRepoInformation(url);
-    response.write("FUCK YES");
+    console.log("Github: " + github.gatherRepoInformation(url));
+    response.write(github.getLanguageFromFiletype(url));
     response.end();
 });
 
