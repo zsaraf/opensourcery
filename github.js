@@ -9,7 +9,7 @@ exports.gatherRepoInformation = function(urlAsJson) {
     var index = urlAsJson.search(searchFor);
     if (index == -1) return "This is not a valid github repository";
     console.log("" + (searchFor).length);
-    var repo = urlAsJson.substring(searchFor.length);
+    var repo = urlAsJson.substring(searchFor.length, urlAsJson.length - 1);
     console.log(repo);
 
 	var ghrepo = client.repo(repo);
