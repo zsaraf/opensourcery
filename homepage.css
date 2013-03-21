@@ -12,7 +12,7 @@ input[type="text"] {
   margin: 10px 0 10px 0;
   padding-left: 10px;
   padding-right: 10px;
-  font-size: 100%;  
+  font-size: 100%;
   transition: box-shadow 1.0s;
   width: 240px;
 }
