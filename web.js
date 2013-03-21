@@ -1,31 +1,72 @@
-var http = require('http')
+// var http = require('http')
 var fs   = require('fs');
 var path = require('path');
-
+var express = require('express');
 var port = process.env.PORT || 5000;
+var app = express.createServer(express.logger());
 
-http.createServer(function(request, response) {
+app.use(express.bodyParser());
 
-	var filePath = '.' + request.url;
-	if (filePath == './') filePath = './index.html';
+app.get('/*', function(request, response) {
+    console.log("GET RECIEVED");
+    var filePath = '.' + request.url;
+    if (filePath == './') filePath = './index.html';
 
-	var extension = path.extname(filePath);
-	var contentType = 'text/html';
-	switch (extension) {
-		case '.html': contentType = 'text/html'; break;
-		case '.js': contentType = 'text/javascript'; break;
-		case '.css': contentType = 'text/css'; break;
-	}
+    var extension = path.extname(filePath);
+    var contentType = 'text/html';
+    switch (extension) {
+        case '.html': contentType = 'text/html'; break;
+        case '.js': contentType = 'text/javascript'; break;
+        case '.css': contentType = 'text/css'; break;
+    }
 
-	fs.readFile(filePath, function(err, content) {
-		if (err) {
-			throw err;
-		}
-		response.writeHead(200, {'Content-Type' : contentType});
-		response.write(content);
-		response.end();
-	});
-
-}).listen(port, function(){
-	console.log("Listening on " + port);
+    fs.readFile(filePath, function(err, content) {
+        if (err) {
+            throw err;
+        }
+        response.writeHead(200, {'Content-Type' : contentType});
+        response.write(content);
+        response.end();
+    });
 });
+
+app.post('/', function(request, response){
+    console.log("POST RECIEVED");
+    var url = request.body.url;
+    console.log("URL: " + url);
+    response.write("FUCK YES");
+    response.end();
+});
+
+app.listen(port, function() {
+  console.log("Listening on " + port);
+});
+
+
+
+// http.createServer(function(request, response) {
+
+//     console.log("REQUEST RECIEVED");
+// 	var filePath = '.' + request.url;
+// 	if (filePath == './') filePath = './index.html';
+
+// 	var extension = path.extname(filePath);
+// 	var contentType = 'text/html';
+// 	switch (extension) {
+// 		case '.html': contentType = 'text/html'; break;
+// 		case '.js': contentType = 'text/javascript'; break;
+// 		case '.css': contentType = 'text/css'; break;
+// 	}
+
+// 	fs.readFile(filePath, function(err, content) {
+// 		if (err) {
+// 			throw err;
+// 		}
+// 		response.writeHead(200, {'Content-Type' : contentType});
+// 		response.write(content);
+// 		response.end();
+// 	});
+
+// }).listen(port, function(){
+// 	console.log("Listening on " + port);
+// });
