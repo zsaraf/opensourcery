@@ -6,7 +6,7 @@ body{
 }
 
 .buttonsArea{
-  margin-left:40%;
+  margin-left: 40%;
   margin-bottom: 30px;
 }
 
@@ -56,7 +56,7 @@ input.highlighted{
 .generalButton {
   box-sizing: border-box;
   border-radius: 8px; 
-  width:240px;
+  width:250px;
   height:40px;
   border: 0px;
   font-size: 120%;
