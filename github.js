@@ -9,7 +9,7 @@ var github_auth = new githubAuthAPI({
 github_auth.authenticate({
     type: "basic",
     username: "calvinstudebaker",
-    password: "Calvcrew6git";
+    password: "Calvcrew6git"
 });
 
 exports.gatherRepoInformation = function(urlAsJson) {
