@@ -1,16 +1,16 @@
 var github = require('octonode');
-var githubAuthAPI = require('github');
+// var githubAuthAPI = require('github');
 
-var github_auth = new githubAuthAPI({
-    // required
-    version: "3.0.0"
-});
+// var github_auth = new githubAuthAPI({
+//     // required
+//     version: "3.0.0"
+// });
 
-github_auth.authenticate({
-    type: "basic",
-    username: "calvinstudebaker",
-    password: "Calvcrew6git"
-});
+// github_auth.authenticate({
+//     type: "basic",
+//     username: "calvinstudebaker",
+//     password: "Calvcrew6git"
+// });
 
 exports.gatherRepoInformation = function(urlAsJson) {
 	//var url = JSON.parse(urlAsJson).url;
