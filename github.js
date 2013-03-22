@@ -1,4 +1,22 @@
 var github = require('octonode');
+/*var githubAuthAPI = require('github');
+
+var github_auth = new githubAuthAPI({
+    // required
+    version: "3.0.0",
+    // optional
+    timeout: 5000
+});
+
+github_auth.user.getFollowingFromUser({
+    user: "zsaraf"
+}, function(err, res) {
+    console.log(JSON.stringify(res));
+});
+
+github_auth.authenticate({
+    type: "basic",
+});*/
 
 exports.gatherRepoInformation = function(urlAsJson) {
 	//var url = JSON.parse(urlAsJson).url;
@@ -15,17 +33,23 @@ exports.gatherRepoInformation = function(urlAsJson) {
 	var ghrepo = client.repo(repo);
 
     var files = new Array();
-    getAllFiles(ghrepo, '/', files);
+    var found = false;
+    getAllFiles(ghrepo, '/', files, found);
     console.log("Done getting all files");
     setTimeout(function() {
-        var frequencies = {};
-        console.log(files.length);
-        for (var i = 0; i < files.length; i++) console.log("FILE PRAT " + files[i]);
+        makeFrequencyMap(files);
+        return "DONE!";
     }, 5000);
+}
+
+function makeFrequencyMap(files) { 
+    var frequencies = {};
+    console.log(files.length);
+    for (var i = 0; i < files.length; i++) console.log("FILE PRAT " + files[i]);
     console.log("OKAY BITCHY");
     for (var i = 0; i < files.length; i++) {
         var fileName = files[i];
-        var extension = fileName.substring(fileName.indexOf("." + 1));
+        var extension = fileName.substring(fileName.lastIndexOf("."));
         if (frequencies.hasOwnProperty(extension)) {
             frequencies[extension] += 1;
         } else {
@@ -33,14 +57,17 @@ exports.gatherRepoInformation = function(urlAsJson) {
         }
     }
     for (var i in frequencies) {
-        console.log(i + ' Frequency: ' + frequencies[i] + ' Description: ' + getLanguageFromFiletype(i));  
+        console.log(i + ' Frequency: ' + frequencies[i] + 
+                    ' Description: ' + 
+                    exports.getLanguageFromFiletype(i));  
+
     }
 
 	var obj = { 'language' : 'JavaScript' };
 	return obj;
 }
 
-function getAllFiles(ghrepo, dir, files) {
+function getAllFiles(ghrepo, dir, files, found) {
     
     ghrepo.contents(dir, function(err, data) {
         var str = data;
@@ -51,9 +78,15 @@ function getAllFiles(ghrepo, dir, files) {
             var type = obj.type;
             if (type == 'dir') {
                 var newDir = path + '/';
-                getAllFiles(ghrepo, newDir, files);
+                getAllFiles(ghrepo, newDir, files, found);
             } else {
                 files[files.length] = path;
+                if (!found) {
+                    found = true;
+                    ghrepo.contents(path, function(err, data) {
+                        console.log(data);
+                    });
+                }
             }
             console.log('Path: ' + obj.path + ' Type: ' + obj.type);
         }
