@@ -39,6 +39,7 @@ h2.logo{
 
 h1{
   font-weight: 300;
+  color: #FFFFFF;
 }
 
 input[type="text"] {
@@ -99,6 +100,6 @@ input[type="button"]:active {
 }
 
 span{
-  color: #909090;
+  color: #FFFFFF;
   margin-left: 20px;
 }
