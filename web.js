@@ -39,9 +39,8 @@ app.post('/', function(request, response){
     
     var url = request.body.url;
     console.log("URL: " + url);
-    //console.log("Github: " + github.gatherRepoInformation(url));
     response.writeHead(200, {'Content-Type' : 'text/plain'});
-    console.log("Github: " + github.gatherRepoInformation(url));
+    //console.log("Github: " + github.gatherRepoInformation(url));
     response.write(github.getLanguageFromFiletype(url));
     response.end();
 });

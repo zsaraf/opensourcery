@@ -1,32 +1,26 @@
 var github = require('octonode');
-/*var githubAuthAPI = require('github');
+var githubAuthAPI = require('github');
 
 var github_auth = new githubAuthAPI({
     // required
-    version: "3.0.0",
-    // optional
-    timeout: 5000
-});
-
-github_auth.user.getFollowingFromUser({
-    user: "zsaraf"
-}, function(err, res) {
-    console.log(JSON.stringify(res));
+    version: "3.0.0"
 });
 
 github_auth.authenticate({
     type: "basic",
-});*/
+    username: "calvinstudebaker",
+    password: "Calvcrew6git";
+});
 
 exports.gatherRepoInformation = function(urlAsJson) {
 	//var url = JSON.parse(urlAsJson).url;
 	var client = github.client();
+    var repoInfo = new Object();
 	
     var searchFor = new String("https://github.com/");
 
     var index = urlAsJson.search(searchFor);
     if (index == -1) return "This is not a valid github repository";
-    console.log("" + (searchFor).length);
     var repo = urlAsJson.substring(searchFor.length, urlAsJson.length - 1);
     console.log(repo);
 
@@ -35,36 +29,39 @@ exports.gatherRepoInformation = function(urlAsJson) {
     var files = new Array();
     var found = false;
     getAllFiles(ghrepo, '/', files, found);
-    console.log("Done getting all files");
-    setTimeout(function() {
-        makeFrequencyMap(files);
-        return "DONE!";
-    }, 5000);
+    var frequencies = makeLanguageFrequencyMap(files);
+    repoInfo.languageFrequencies = frequencies;
+    return repoInfo;
 }
 
-function makeFrequencyMap(files) { 
+function classifyRepo(ghrepo){
+
+
+}
+
+function makeLanguageFrequencyMap(files) { 
     var frequencies = {};
-    console.log(files.length);
-    for (var i = 0; i < files.length; i++) console.log("FILE PRAT " + files[i]);
-    console.log("OKAY BITCHY");
     for (var i = 0; i < files.length; i++) {
         var fileName = files[i];
         var extension = fileName.substring(fileName.lastIndexOf("."));
-        if (frequencies.hasOwnProperty(extension)) {
-            frequencies[extension] += 1;
-        } else {
-            frequencies[extension] = 1;
+        var language = exports.getLanguageFromFiletype(extension);
+        if(language != "unrecognized file type"){
+            if (frequencies.hasOwnProperty(language)) {
+                frequencies[language] += 1;
+            } else {
+             frequencies[language] = 1;
+            }
         }
+        
     }
-    for (var i in frequencies) {
-        console.log(i + ' Frequency: ' + frequencies[i] + 
-                    ' Description: ' + 
-                    exports.getLanguageFromFiletype(i));  
+    // for (var i in frequencies) {
+    //     console.log(i + ' Frequency: ' + frequencies[i] + 
+    //                 ' Description: ' + 
+    //                 exports.getLanguageFromFiletype(i));  
 
-    }
+    // }
 
-	var obj = { 'language' : 'JavaScript' };
-	return obj;
+	return frequencies;
 }
 
 function getAllFiles(ghrepo, dir, files, found) {
@@ -99,6 +96,55 @@ exports.getLanguageFromFiletype = function(fileExtension){
 	}
 	return "unrecognized file type";
 }
+
+var categoryKeyWords = {
+    "Mobile" : [
+        "mobile",
+        "droid",
+        "android",
+        "iOS",
+        "phone",
+        "cell",
+        "gesture"
+    ],
+    "Cloud Storage" : [
+        "cloud",
+        "server",
+        "instance"
+    ],
+    "Web" : [
+        "web",
+        "app",
+        "site"
+    ],
+    "Database" : [
+        "query",
+        "database",
+        "sql",
+        "db",
+        "mongo"
+    ],
+    "Graphics" : [
+        "graphic",
+        "graphical",
+        "beautiful",
+        "openGL",
+        "matrix"
+    ],
+    "Operating System" : [
+        "operating",
+        "platform",
+        "compiler",
+        "kernel"
+    ],
+    "UI" : [
+        "user",
+        "friendly",
+        "intuitive",
+        "interface",
+        "theme"
+    ]
+};
 
 //Data adapted from http://www.webopedia.com/quick_ref/fileextensionsfull.asp
 var everyFileExtension = {
