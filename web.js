@@ -29,6 +29,7 @@ app.get('/*', function(request, response) {
         }
         response.writeHead(200, {'Content-Type' : contentType});
         response.write(content);
+        console.log("GET RESPONDED");
         response.end();
     });
 });
@@ -40,6 +41,7 @@ app.post('/', function(request, response){
     console.log("URL: " + url);
     //console.log("Github: " + github.gatherRepoInformation(url));
     response.writeHead(200, {'Content-Type' : 'text/plain'});
+    console.log("Github: " + github.gatherRepoInformation(url));
     response.write(github.getLanguageFromFiletype(url));
     response.end();
 });
